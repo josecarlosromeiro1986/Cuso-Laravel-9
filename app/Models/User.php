@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'image',
     ];
 
     /**
@@ -49,7 +50,8 @@ class User extends Authenticatable
                 $query->where('name', 'RLIKE', "$search");
                 $query->orWhere('email', 'RLIKE', "$search");
             }
-        })->get();
+        })->with('comments')
+            ->paginate();
 
         return $users;
     }
